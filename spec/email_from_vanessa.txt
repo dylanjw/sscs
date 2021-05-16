@@ -1,0 +1,66 @@
+Hey Dylan,
+
+Sorry for the delay here! I haven't had time to dedicate to this until now. 
+
+I'm really stoked to have you on board for this! It's been a while since the meeting and I forgot what info you needed from me to get started. 
+
+Here's what I have for you now:
+
+Client Profile (Registering new clients)
+
+    First Name/Last Name
+    Nicknames (for people who like to change their names)
+    Date of birth
+    Contact information — Phone/Email
+    Household Size — Single, Single parent, Couples, Family of 3/4/5/6 etc.)
+        First Name/Last Name of all household members
+        Date of birth of all household members
+    Number of pets
+    Dietary Considerations (i.e. allergies, religious dietary restrictions etc.)
+    Date of first/last visit
+    Resident or non-resident
+
+I think that's pretty good to start with. That's for when we register new people. 
+
+Then on a weekly basis when people show up we want to be able to select the service(s) they received (see programs/services below). 
+
+Weekly Use
+
+    Search clients by name or date of birth
+    Select which services were accessed and when (maybe here it would be nice for the coordinator to have the option of selecting a recurrence for the service) 
+    Select who from household came
+
+Programs/Services
+
+    Food Bank 
+        Walk-In
+        Online Orders
+        Home Deliveries
+    Harvest Home Meals
+    Farmer's Market Nutrition Coupon Program
+
+And then, the basic things we want to track on a weekly/monthly/annual basis...
+
+Stats/Reports
+
+    # of people who received each services
+    # of seniors served
+    # of children/families served
+
+--
+
+I can't think of anything else just now...
+
+Let me know if you have enough to get started or if you have any questions. 
+Can you let us know an approx. timeline for when we can expect to have a rough version to look at. 
+
+Also also, if you haven't firmed anything up yet with Simone about an hourly/payment schedule, I'd probably suggest you do before getting started.
+
+Let's touch base in a couple weeks and see where you're at?
+Cheers,
+
+-- 
+Vanessa Sabourin
+Volunteer Coordinator
+Salt Spring Island Community Services
+vsabourin@ssics.ca
