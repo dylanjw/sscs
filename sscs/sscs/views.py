@@ -1,13 +1,38 @@
 from django.shortcuts import render
 
-from .forms import ExtClientForm
+from .forms import (
+    ClientForm,
+    ClientProfileForm,
+    ClientNickForm,
+)
 
 
 def new_client(request):
     if request.method == "POST":
-        form = ExtClientForm(request.POST)
-        if form.is_valid():
+
+        client_form = ClientForm(request.POST)
+        client_profile_form = ClientProfileForm(request.POST)
+        client_nick_form = ClientNickForm(request.POST)
+
+
+        forms = [c_form, cp_form, cn_form]
+
+        for form in forms:
+            if not form.is_valid:
+                break
+            form.save()
+        else:
             return HttpResponseRedirect('/thanks/')
     else:
-        form = ExtClientForm()
-    return render(request, 'sscs/new_client.html', {'form': form})
+        cp_form = ClientProfileForm()
+        c_form = ClientForm()
+        cn_form = ClientNickForm()
+    return render(
+        request,
+        'sscs/new_client.html',
+        {
+            'client_form': c_form,
+            'client_profile_form': cp_form,
+            'client_nick_form': cn_form
+        }
+    )

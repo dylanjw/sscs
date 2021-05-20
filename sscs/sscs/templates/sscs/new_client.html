@@ -2,10 +2,12 @@
 {% load tailwind_filters %}
 
 {% block content %}
-<div class="grid grid-cols1 gap-4">
+<div>
+    hi
 <form action="/new_client/" method="post">
     {% csrf_token %}
-    {{ form|crispy }}
+    {{ client_form }}
+    {{ client_profile_form }}
     <input type="submit" value="Submit">
 </form>
 </div>

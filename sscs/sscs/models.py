@@ -7,7 +7,7 @@ class Client(models.Model):
     dob = models.DateField()
 
 
-class ClientExt(models.Model):
+class ClientProfile(models.Model):
     # A client is a
     client = models.OneToOneField(
         Client,
@@ -26,7 +26,7 @@ class ClientExt(models.Model):
     resident_status = models.CharField(max_length=200)
 
 
-class ClientNicks(models.Model):
+class ClientNick(models.Model):
     client = models.ForeignKey(
         'Client',
         on_delete = models.CASCADE,
