@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tailwind',
+    'crispy_forms',
+    'crispy_tailwind',
+    'theme',
     'sscs',
 ]
 
@@ -125,3 +129,12 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TAILWIND_APP_NAME = 'theme'
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+
+CRISPY_TEMPLATE_PACK = "tailwind"
