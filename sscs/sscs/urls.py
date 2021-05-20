@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from .views import new_client
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('new_client/', new_client),
 ]
