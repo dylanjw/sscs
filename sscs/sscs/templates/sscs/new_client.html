@@ -1,14 +1,18 @@
-{% extends 'base.html' %}
-{% load tailwind_filters %}
+{% load bootstrap4 %}       {# import bootstrap4/bootstrap3 #}
+{% bootstrap_css %}         {# Embed Bootstrap CSS #}
+{% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
+:
+{{ client_form.media }}            {# Adds date-picker required JS and CSS #}
+{{ client_profile_form.media }}            {# Adds date-picker required JS and CSS #}
 
-{% block content %}
-<div>
-    hi
+<div class="container">
 <form action="/new_client/" method="post">
     {% csrf_token %}
-    {{ client_form }}
-    {{ client_profile_form }}
-    <input type="submit" value="Submit">
+    {% bootstrap_form client_form %}
+    {% bootstrap_form client_profile_form %}
+    {% bootstrap_form client_nick_form %}
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    {% endbuttons %}
 </form>
-</div>
-{% endblock %}
+<div>
