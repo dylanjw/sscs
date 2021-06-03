@@ -1,10 +1,8 @@
 from bootstrap_datepicker_plus import DatePickerInput
-from django.contrib import admin
 from django.forms import ModelForm, formset_factory
 
 from .models import (
     Client,
-    ClientNick,
     ClientProfile,
 )
 
@@ -18,17 +16,8 @@ class ClientForm(ModelForm):
             "dob"
         ]
         widgets = {
-            "dob":DatePickerInput()
+            "dob": DatePickerInput()
         }
-
-
-class ClientNickForm(ModelForm):
-    class Meta:
-        model = ClientNick
-        fields = ["nickname"]
-
-
-
 
 
 class ClientProfileForm(ModelForm):
@@ -36,10 +25,7 @@ class ClientProfileForm(ModelForm):
         model = ClientProfile
         exclude = ['client']
         widgets = {
-            "date_of_first_visit":DatePickerInput(),
-            "date_of_last_visit":DatePickerInput(),
+            "date_of_first_visit": DatePickerInput(),
+            "date_of_last_visit": DatePickerInput(),
         }
 
-@admin.register(ClientProfile)
-class ClientProfileAdmin(admin.ModelAdmin):
-    pass

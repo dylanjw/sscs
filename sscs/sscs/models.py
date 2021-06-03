@@ -13,6 +13,7 @@ class ClientProfile(models.Model):
         Client,
         on_delete = models.CASCADE
     )
+    nicknames = models.CharField(max_length=200)
     phone_number = models.CharField(max_length=20)
     email = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
@@ -24,11 +25,3 @@ class ClientProfile(models.Model):
     date_of_first_visit = models.DateField()
     date_of_last_visit = models.DateField()
     resident_status = models.CharField(max_length=200)
-
-
-class ClientNick(models.Model):
-    client = models.ForeignKey(
-        'Client',
-        on_delete = models.CASCADE,
-    )
-    nickname = models.CharField(max_length=200)
