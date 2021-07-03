@@ -1,18 +1,59 @@
+{% extends "base.html" %}
+{% load static %}       {# import bootstrap4/bootstrap3 #}
 {% load bootstrap4 %}       {# import bootstrap4/bootstrap3 #}
-{% bootstrap_css %}         {# Embed Bootstrap CSS #}
-{% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
-{{ client_form.media }}            {# Adds date-picker required JS and CSS #}
-{{ client_profile_form.media }}            {# Adds date-picker required JS and CSS #}
+{% block extrahead %}
+  {{ client_form.media }}
+{% endblock %}
+{% block content %}
 <div class="container">
-<h1>New Client Form</h1>
+<h1>Client</h1>
 <div class="container">
-<form action="/new_client/" method="post">
+    <form data-reflex="input->NewClientFormReflex#update" data-reflex-root="#morph">
     {% csrf_token %}
-    {% bootstrap_form client_form %}
-    {% bootstrap_form client_profile_form %}
+        <div class="row">
+          <div class="col">
+         {% bootstrap_field client_form.first_name %}
+          </div>
+          <div class="col">
+         {% bootstrap_field client_form.last_name %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+        {% bootstrap_field client_form.nicknames %}
+          </div>
+          <div class="col">
+        {% bootstrap_field client_form.dob %}
+          </div>
+        </div>
     {% buttons %}
-        <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="reset" class="btn btn-secondary" data-reflex="click->NewClientFormReflex#update">Reset</button>
+    <button type="submit" class="btn btn-primary" data-reflex="click->NewClientFormReflex#new_client">Submit</button>
     {% endbuttons %}
 </form>
+<div id="morph">
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Date of Birth</th>
+            <th scope="col">Nick Names</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for client in clients %}
+        <tr>
+            <td>{{client.first_name}}</td>
+            <td>{{client.last_name}}</td>
+            <td>{{client.dob}}</td>
+            <td>{{client.nicknames}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
 </div>
 </div>
+{% endblock %}

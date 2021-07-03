@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path.cwd()
 
 
 # Quick-start development settings - unsuitable for production
@@ -29,6 +29,14 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+ASGI_APPLICATION = 'sockpuppet.routing.application'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,7 +49,8 @@ INSTALLED_APPS = [
     'jquery',
     'bootstrap4',
     'bootstrap_datepicker_plus',
-    'crispy_forms',
+    'channels',
+    'sockpuppet',
     'sscs',
 ]
 
@@ -135,3 +144,7 @@ INTERNAL_IPS = [
 ]
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+STATICFILES_DIRS = [
+    ("js", f"{BASE_DIR}/dist/js"),
+]
