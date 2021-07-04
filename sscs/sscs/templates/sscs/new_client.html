@@ -27,12 +27,12 @@
           </div>
         </div>
     {% buttons %}
-    <button type="reset" class="btn btn-secondary" data-reflex="click->NewClientFormReflex#update">Reset</button>
+    <button type="reset" class="btn btn-secondary" data-reflex="click->NewClientFormReflex#update" onClick="this.form.reset()">Reset</button>
     <button type="submit" class="btn btn-primary" data-reflex="click->NewClientFormReflex#new_client">Submit</button>
     {% endbuttons %}
 </form>
 <div id="morph">
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th scope="col">First Name</th>
@@ -43,7 +43,7 @@
     </thead>
     <tbody>
         {% for client in clients %}
-        <tr>
+        <tr class="view overlay">
             <td>{{client.first_name}}</td>
             <td>{{client.last_name}}</td>
             <td>{{client.dob}}</td>
