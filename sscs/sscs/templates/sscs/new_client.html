@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}       {# import bootstrap4/bootstrap3 #}
+{% load octicons %}
 {% load bootstrap4 %}       {# import bootstrap4/bootstrap3 #}
 {% block extrahead %}
   {{ client_form.media }}
@@ -7,10 +8,31 @@
 {% block content %}
 <div class="container">
 <h1>Client</h1>
+ <div class="container" data-controller="new_client">
+{% if mode == 'view' or mode == 'edit' %}
+<a class="btn btn-lg" href="#" role="button" data-action="click->new_client#toggle_search">
+  {% octicon "search" %}
+</a>
+{% endif %}
+{% if mode == 'view'%}
+<!-- Cient Form Start -->
+<a class="btn btn-lg float-right" href="#" role="button" data-action="click->new_client#toggle_edit">
+  {% octicon "pencil" %}
+</a>
+{% endif %}
 <div class="container">
-    <form data-reflex="input->NewClientFormReflex#update" data-reflex-root="#morph">
+  <form data-controller="new_client" 
+    {% if mode == 'edit' %}
+    data-action="change->new_client#update"
+    {% endif %}
+    >
     {% csrf_token %}
-        <div class="row">
+    <fieldset {{ forms_disabled }}>
+        <div class="row" 
+          {% if mode == 'search' %}
+          data-action="input->new_client#search"
+          {% endif %}
+          >
           <div class="col">
          {% bootstrap_field client_form.first_name %}
           </div>
@@ -18,7 +40,11 @@
          {% bootstrap_field client_form.last_name %}
           </div>
         </div>
-        <div class="row">
+        <div class="row" 
+          {% if mode == 'search' %}
+          data-action="input->new_client#search"
+          {% endif %}
+          >
           <div class="col-8">
         {% bootstrap_field client_form.nicknames %}
           </div>
@@ -26,13 +52,65 @@
         {% bootstrap_field client_form.dob %}
           </div>
         </div>
+        <!-- Profile fields -->
+        {% if mode == 'view' or mode == 'edit' %}
+        <div class="row">
+          <div class="col" >
+          {% bootstrap_field client_profile_form.phone_number %}
+          </div>
+          <div class="col">
+          {% bootstrap_field client_profile_form.email %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" >
+          {% bootstrap_field client_profile_form.address %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" >
+          {% bootstrap_field client_profile_form.household_size %}
+          </div>
+          <div class="col" >
+          {% bootstrap_field client_profile_form.pets_cat_count %}
+          </div>
+          <div class="col" >
+          {% bootstrap_field client_profile_form.pets_dog_count %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" >
+          {% bootstrap_field client_profile_form.dietary_considerations %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" >
+          {% bootstrap_field client_profile_form.date_of_first_visit %}
+          </div>
+          <div class="col" >
+          {% bootstrap_field client_profile_form.date_of_last_visit %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" >
+          {% bootstrap_field client_profile_form.resident_status %}
+          </div>
+        </div>
+        {% endif %}
+        </fieldset>
+
     {% buttons %}
-    <button type="reset" class="btn btn-secondary" data-reflex="click->NewClientFormReflex#update" onClick="this.form.reset()">Reset</button>
-    <button type="submit" class="btn btn-primary" data-reflex="click->NewClientFormReflex#new_client">Submit</button>
+    <button type="reset" class="btn btn-secondary" data-action="click->new_client#update" onClick="this.form.reset()">Reset</button>
+    <button type="submit" class="btn btn-primary" data-action="click->new_client#new_client">Submit</button>
     {% endbuttons %}
 </form>
-<div id="morph">
-<table class="table table-hover">
+  </div>
+<!-- Cient Form End -->
+
+
+<!-- Client Table Start -->
+<div id="client_table" class="{{ client_table_vis }}">
+<table class="table table-hover" data-controller="new_client">
     <thead>
         <tr>
             <th scope="col">First Name</th>
@@ -43,7 +121,7 @@
     </thead>
     <tbody>
         {% for client in clients %}
-        <tr class="view overlay">
+        <tr class="view overlay" data-action="click->new_client#select" data-id="{{ client.pk }}">
             <td>{{client.first_name}}</td>
             <td>{{client.last_name}}</td>
             <td>{{client.dob}}</td>
@@ -53,6 +131,7 @@
     </tbody>
 </table>
 </div>
+<!-- Client Table Stop -->
 
 </div>
 </div>

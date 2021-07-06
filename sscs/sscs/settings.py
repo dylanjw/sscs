@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'channels',
     'sockpuppet',
     'sscs',
+    'octicons',
 ]
 
 MIDDLEWARE = [
@@ -146,5 +147,5 @@ INTERNAL_IPS = [
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 STATICFILES_DIRS = [
-    ("js", f"{BASE_DIR}/dist/js"),
+    BASE_DIR / "static/js",
 ]

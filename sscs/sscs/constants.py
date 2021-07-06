@@ -1,0 +1,20 @@
+TOGGLE_MODE_SETTINGS =  {
+    'edit':
+        {
+            'forms_disabled':"",
+            'profile_vis':"visible",
+            "client_table_vis":"invisible",
+        },
+    'view':
+        {
+            'forms_disabled':"disabled",
+            'profile_vis':"visible",
+            "client_table_vis":"invisible",
+        },
+    'search':
+        {
+            'forms_disabled':"",
+            'profile_vis':"invisible",
+            "client_table_vis":"visible",
+        },
+}

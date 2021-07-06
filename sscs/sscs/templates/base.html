@@ -4,11 +4,11 @@
 <head>
 {% bootstrap_css %}         {# Embed Bootstrap CSS #}
 {% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
+<script src="{% static 'index.js' %}"></script>
 {% block extrahead%}
 {% endblock %}
 </head>
 <body>
-<script src="{% static 'sockpuppet/sockpuppet.js' %}"></script>
 {% block content %}
 {% endblock %}
 </body>
