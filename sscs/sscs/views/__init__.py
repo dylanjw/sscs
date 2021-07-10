@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from django.views import View
 from django.views.generic.base import TemplateView
+from django.core.paginator import Paginator
 
 from sscs.forms import (
     ClientProfileForm,
@@ -32,14 +33,7 @@ class NewClientView(TemplateView):
         self.form_dict = {
             f"{form.prefix}_form":form() for form in self.form_classes
         }
-
-    @property
-    def mode(self):
-        return self.request.session.get('mode')
-
-    @mode.setter
-    def mode(self, value):
-        self.request.session['mode'] = value
+        self.mode = 'search'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -79,6 +73,8 @@ class NewClientView(TemplateView):
                 )
 
         context = context | TOGGLE_MODE_SETTINGS[self.mode]
-        context = context | {"clients":get_client_list()}
+        clients = get_client_list()
+        paginator = Paginator(clients, 10)
+        context = context | {"page_obj":paginator.get_page(1)}
         context['mode'] = self.mode
         return context

@@ -7622,11 +7622,12 @@ class NewClientFormController extends stimulus__WEBPACK_IMPORTED_MODULE_0__.Cont
   }
 
   search(event) {
+    //document.getElementById("field_errors").classList.add("d-none")
     event.preventDefault()
-    console.log(this.data.get('reflex'))
     this.stimulate('NewClientFormReflex#search')
   }
   update(event) {
+    //document.getElementById("field_errors").classList.add("d-none")
     event.preventDefault()
     console.log(event.target)
     let name = event.target.name.split("-")
@@ -7651,12 +7652,20 @@ class NewClientFormController extends stimulus__WEBPACK_IMPORTED_MODULE_0__.Cont
   }
   new_client(event) {
     event.preventDefault()
+    document.getElementById("field_errors").classList.remove("d-none")
     this.stimulate('NewClientFormReflex#new_client')
   }
   select(event) {
     event.preventDefault()
     let pk = event.target.parentNode.dataset.id
     this.stimulate('NewClientFormReflex#select', pk)
+  }
+  paginate(event) {
+    event.preventDefault()
+    let page = event.target.dataset.page
+    if (!event.target.classList.contains("disabled")) {
+      this.stimulate('NewClientFormReflex#paginate', page)
+    }
   }
 }
 

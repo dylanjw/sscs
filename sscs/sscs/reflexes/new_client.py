@@ -1,8 +1,9 @@
+from django.core.paginator import Paginator
+from django.db import IntegrityError
 from sockpuppet.reflex import Reflex
 from sockpuppet.channel import Channel
 from sscs.models import Client, ClientProfile
 from sscs.utils import get_client_list
-from sscs.constants import TOGGLE_MODE_SETTINGS
 from sscs.forms import ClientForm
 
 
@@ -18,11 +19,22 @@ def parse_form_fields(form_prefix, params):
 
 
 class NewClientFormReflex(Reflex):
-    def search(self):
-        self.clients = get_client_list(
-            **parse_form_fields('client', self.params)
+    def paginate(self, page):
+        paginator = Paginator(
+            get_client_list(
+                **parse_form_fields('client', self.params)
+            ),
+            10
         )
-        print(f"clients: {self.clients}")
+        self.page_obj = paginator.get_page(page)
+    def search(self):
+        paginator = Paginator(
+            get_client_list(
+                **parse_form_fields('client', self.params)
+            ),
+            10
+        )
+        self.page_obj = paginator.get_page(1)
     def update(self, field_d):
         print(f"updating {field_d['form']} with {field_d['field']}:{field_d['value']}")
         pk = self.session.get("pk")
@@ -47,18 +59,39 @@ class NewClientFormReflex(Reflex):
         form_fields = parse_form_fields('client', self.params)
         matches = Client.objects.filter(**form_fields)
         if matches.exists():
-            print("client already exists")
+            self.error_message = "Client already exists"
             return
         client = Client(**form_fields)
-        client.save()
-        print("created new client")
+        try:
+            client.save()
+        except IntegrityError as e:
+            print("form error")
+            self.error_message = "There was an error with your submission"
+
+            self.client_form = ClientForm(
+                initial = {
+                    "first_name": client.first_name,
+                    "last_name":client.last_name,
+                    "nicknames":client.nicknames,
+                    "dob":client.dob
+                }
+            )
+            self.toggle('search')
+            return
+        self.session['pk'] = client.pk
+        self.toggle('edit')
+        self.client_form = ClientForm(
+            initial = {
+                "first_name": client.first_name,
+                "last_name":client.last_name,
+                "nicknames":client.nicknames,
+                "dob":client.dob
+            }
+        )
+        print(f"created new client: {client.pk}")
     def toggle(self, mode):
-        settings = TOGGLE_MODE_SETTINGS[mode]
         if mode == 'search':
             self.session['pk'] == None
-        for key, value in settings.items():
-            setattr(self, key, value)
-        self.session['mode'] = mode
         self.mode = mode
     def select(self, pk):
         self.session['pk'] = pk
