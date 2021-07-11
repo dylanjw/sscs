@@ -6741,7 +6741,7 @@ var controllers = __webpack_require__(398);
 
 
 const application = stimulus/* Application.start */.Mx.start()
-const consumer = new WebsocketConsumer('ws://'+ window.location.host + '/ws/sockpuppet-sync')
+const consumer = new WebsocketConsumer('wss://'+ window.location.host + '/ws/sockpuppet-sync')
 
 application.register('new_client', controllers/* default */.Z)
 console.log(application)
