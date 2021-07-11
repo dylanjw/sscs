@@ -1,3 +1,3 @@
 release: python3 manage.py migrate
-web: gunicorn sscs.wsgi --log-file -
-worker: python manage.py runworker default
+web: daphne sscs.asgi:channel_layer --port $PORT --bind 0.0.0.0
+worker: python manage.py runworker channel_layer
