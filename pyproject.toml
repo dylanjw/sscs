@@ -15,6 +15,7 @@ django-jquery = "^3.1.0"
 django-sockpuppet = "^0.6.0"
 lxml = "^4.6.3"
 django-octicons = "^1.0.2"
+gunicorn = {version = "^20.1.0", extras = ["production"]}
 
 [tool.poetry.dev-dependencies]
 isort = "^5.8.0"
