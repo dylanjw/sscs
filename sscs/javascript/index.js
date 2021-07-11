@@ -5,7 +5,7 @@ import NewClientFormController from './controllers.js'
 
 
 const application = Application.start()
-const consumer = new WebsocketConsumer('ws://localhost:8000/ws/sockpuppet-sync')
+const consumer = new WebsocketConsumer('ws://'+ window.location.host + '/ws/sockpuppet-sync')
 
 application.register('new_client', NewClientFormController)
 console.log(application)
