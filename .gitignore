@@ -223,3 +223,4 @@ tags
 # End of https://www.toptal.com/developers/gitignore/api/python,vim,emacs
 dist/
 node_modules/
+staticfiles/

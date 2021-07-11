@@ -148,5 +148,5 @@ INTERNAL_IPS = [
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 STATICFILES_DIRS = [
-    BASE_DIR / "sscs/static/js",
+    BASE_DIR / "static/js",
 ]
