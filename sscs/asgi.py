@@ -8,11 +8,10 @@ https://docs.djangoproject.com/en/3.2/howto/deployment/asgi/
 """
 
 import os
-import channels.layers
-
-from django.core.asgi import get_asgi_application
+import django
+import channels.routing import get_default_application()
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sscs.settings.base')
+django.setup()
 
-application = get_asgi_application()
-channel_layer = channels.layers.get_channel_layer()
+application = get_default_application()
