@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-%tzx1rqg8i7d@+u0r-0wlv_zii11(#jhhd223oip6_g39+04$-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "morning-anchorage-36067.herokuapp.com"]
 
 
 CHANNEL_LAYERS = {
