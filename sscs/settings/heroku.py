@@ -26,11 +26,13 @@ DATABASES = {
     'default': env.db(),
 }
 
+# Cant use TLS for redis until
+# resolved channels_redis/issues/235
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [env('REDIS_TLS_URL')],
+            "hosts": [env('REDIS_URL')],
         },
     },
 }
