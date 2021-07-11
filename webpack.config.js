@@ -23,7 +23,7 @@ const config = {
     mode: process.env.NODE_ENV,
     entry: entryObj,
     output: {
-        path: path.resolve(__dirname, 'sscs/static/js'),
+        path: path.resolve(__dirname, 'static/js'),
         publicPath: "/static/",
         filename: '[name].js',
         chunkFilename: "[id]-[chunkhash].js",
