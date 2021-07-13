@@ -224,3 +224,6 @@ tags
 dist/
 node_modules/
 staticfiles/
+static/
+*.key
+*.crt
