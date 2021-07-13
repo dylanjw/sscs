@@ -9,4 +9,6 @@ TODO:
 - [x] fix first name bug
 - [x] block return key from submitting form
 - [x] handle errors, specifically new_client registration with missing fields
+- [ ] fix bug where editing profile enters search mode
+- [ ] bug where editing clears client form fields
 - [ ] feature: remove clients
