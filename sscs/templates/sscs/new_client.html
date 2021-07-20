@@ -22,7 +22,7 @@
   {% octicon "pencil" %}
 </a>
 <div id="form_container" class="container">
-  <form id="client_form" data-reflex-root="#view_mode, #client_table, #client_buttons" data-controller="new_client" data-reflex-serialize-form="true"
+  <form autocomplete="off" id="client_form" data-reflex-root="#view_mode, #client_table, #client_buttons" data-controller="new_client" data-reflex-serialize-form="true"
      onkeydown="return event.key != 'Enter';"
     {% if mode == 'edit' %}
     data-action="change->new_client#update"
@@ -59,7 +59,7 @@
           </div>
         </div>
         <!-- Profile fields -->
-        <div class="d-none" id="profile">
+        <div class="{{ profile_form_classes }}" id="profile" data-controller="new_client" data-reflex-root="#form_container, #view_mode" data-action="change->new_client#update">
         <div class="row">
           <div class="col" >
           {% bootstrap_field client_profile_form.phone_number %}
