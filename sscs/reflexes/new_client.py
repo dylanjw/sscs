@@ -83,7 +83,7 @@ class NewClientFormReflex(Reflex):
             self.toggle('search')
             return
         self.client_form, self.client_profile_form = _refill_forms_from_params(
-            params
+            self.params
         )
         self.toggle('edit')
         self.session['pk'] = client.pk
@@ -114,7 +114,6 @@ class NewClientFormReflex(Reflex):
 
 def _refill_forms_from_db(pk):
         client = Client.objects.get(pk=pk)
-        client_profile = ClientProfile.objects.get(client=client)
         client_form = ClientForm(
             initial = {
                 "first_name": client.first_name,
@@ -123,20 +122,24 @@ def _refill_forms_from_db(pk):
                 "dob":client.dob
             }
         )
-        client_profile_form = ClientProfileForm(
-            initial={
-                "phone_number": client_profile.phone_number,
-                "email": client_profile.email,
-                "address": client_profile.address,
-                "household_size": client_profile.household_size,
-                "pets_cat_count": client_profile.pets_cat_count,
-                "pets_dog_count": client_profile.pets_dog_count,
-                "dietary_considerations": client_profile.dietary_considerations,
-                "date_of_first_visit": client_profile.date_of_first_visit,
-                "date_of_last_visit": client_profile.date_of_last_visit,
-                "resident_status": client_profile.resident_status,
-            }
-        )
+        try:
+            client_profile = ClientProfile.objects.get(client=client)
+            client_profile_form = ClientProfileForm(
+                initial={
+                    "phone_number": client_profile.phone_number,
+                    "email": client_profile.email,
+                    "address": client_profile.address,
+                    "household_size": client_profile.household_size,
+                    "pets_cat_count": client_profile.pets_cat_count,
+                    "pets_dog_count": client_profile.pets_dog_count,
+                    "dietary_considerations": client_profile.dietary_considerations,
+                    "date_of_first_visit": client_profile.date_of_first_visit,
+                    "date_of_last_visit": client_profile.date_of_last_visit,
+                    "resident_status": client_profile.resident_status,
+                }
+            )
+        except ClientProfile.DoesNotExist:
+            client_profile_form = ClientProfileForm()
         return client_form, client_profile_form
 
 

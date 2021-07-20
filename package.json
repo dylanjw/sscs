@@ -26,5 +26,8 @@
     "stimulus_reflex": "^3.5.0-pre1",
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.0"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
