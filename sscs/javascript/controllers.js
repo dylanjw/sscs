@@ -33,7 +33,7 @@ class NewClientFormController extends Controller {
   toggle_search(event) {
     event.preventDefault()
     this.stimulate('NewClientFormReflex#toggle', 'search')
-    document.getElementById("client_table").reset()
+    document.getElementById("client_form").reset()
   }
   new_client(event) {
     event.preventDefault()

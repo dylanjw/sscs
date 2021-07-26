@@ -54,7 +54,10 @@
           </div>
           <div class="col"
           {% if mode == 'search' %}
-          data-action="change->new_client#search"
+          data-action="focusout->new_client#search"
+          {% endif %}
+          {% if mode == 'edit' %}
+          data-action="focusout->new_client#update"
           {% endif %}
             >
         {% bootstrap_field client_form.dob %}
@@ -92,10 +95,14 @@
           </div>
         </div>
         <div class="row">
-          <div class="col" >
+          <div class="col" 
+              data-action="focusout->new_client#update"
+            >
           {% bootstrap_field client_profile_form.date_of_first_visit %}
           </div>
-          <div class="col" >
+          <div class="col" 
+              data-action="focusout->new_client#update"
+          >
           {% bootstrap_field client_profile_form.date_of_last_visit %}
           </div>
         </div>
