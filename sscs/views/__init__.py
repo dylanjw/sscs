@@ -7,6 +7,7 @@ from django.core.paginator import Paginator
 from sscs.forms import (
     ClientProfileForm,
     ClientForm,
+    ClientFamilyFormSet,
 )
 
 from sscs.models import (
@@ -34,11 +35,13 @@ class NewClientView(TemplateView):
             context['profile_form_classes'] = 'd-none'
             context['client_form'] = ClientForm()
             context['client_profile_form'] = ClientProfileForm()
+            context['client_family_formset'] = ClientFamilyFormSet(prefix="family")
         else:
             context['profile_form_classes'] = ''
             context['client_form'] = ClientForm()
             context['client_profile_form'] = ClientProfileForm()
             context['mode'] = self.request.session.get('mode')
+            context['client_family_formset'] = ClientFamilyFormSet(prefix="family")
 
         context = context | TOGGLE_MODE_SETTINGS[self.mode]
         clients = get_client_list()

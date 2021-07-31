@@ -14,6 +14,9 @@ class ClientForm(forms.Form):
     nicknames = forms.CharField(label="Nicknames", max_length=200)
 
 
+ClientFamilyFormSet = forms.formset_factory(ClientForm, extra=1)
+
+
 class ClientProfileForm(forms.Form):
     prefix = "client_profile"
 

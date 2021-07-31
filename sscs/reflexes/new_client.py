@@ -4,7 +4,7 @@ from sockpuppet.reflex import Reflex
 from sockpuppet.channel import Channel
 from sscs.models import Client, ClientProfile
 from sscs.utils import get_client_list
-from sscs.forms import ClientForm, ClientProfileForm
+from sscs.forms import ClientForm, ClientProfileForm, ClientFamilyFormSet
 
 
 def parse_form_fields(form_prefix, params):
@@ -16,6 +16,29 @@ def parse_form_fields(form_prefix, params):
             ret = ret | {key[len(form_prefix):]:value}
     return ret
 
+
+def parse_formset_prefix(key, prefix):
+    index = key[len(prefix):][0]
+
+    # format of key is prefix-N-field_key
+    field_key = key[len(prefix) + 2:]
+    return (index, field_key)
+
+
+def parse_formset_fields(form_prefix=None, params=None):
+    if form_prefix is None:
+        form_prefix = "form-"
+    else:
+        form_prefix = form_prefix + "-"
+    ret = {}
+    "form-0, form-1"
+    for key, value in params.items():
+        if key.startswith(form_prefix):
+            i, k = parse_formset_prefix(key, form_prefix)
+            if ret.get(i) is None:
+                ret[i] = {}
+            ret[i][k] = value
+    return ret
 
 
 class NewClientFormReflex(Reflex):
@@ -36,6 +59,25 @@ class NewClientFormReflex(Reflex):
         )
         self.page_obj = paginator.get_page(1)
         self.refill_forms()
+
+
+    def add_family(self, index):
+        family_members = parse_formset_fields('family', self.params)
+        pk = self.session.get("pk")
+        if pk is None:
+            raise TypeError("pk is not set")
+        client = Client.objects.get(pk=pk)
+
+        (family_member, created) = Client.objects.get_or_create(
+            **family_members[index]
+        )
+        print(f"new client family created:{created}")
+        family_member.head_of_household=client
+        family_member.save()
+        self.mode = "edit"
+        self.refill_forms()
+
+
     def update(self, field_d):
         print(f"updating {field_d['form']} with {field_d['field']}:{field_d['value']}")
         pk = self.session.get("pk")
@@ -55,7 +97,7 @@ class NewClientFormReflex(Reflex):
             setattr(client_profile, field_d['field'], field_d['value'])
             client_profile.save()
             print("saving profile")
-        self.refill_forms(pk)
+        self.refill_forms()
         print(f"self.mode:{self.mode}, session['mode']{self.session.get('mode')}")
 
 
@@ -95,10 +137,10 @@ class NewClientFormReflex(Reflex):
         self.session['mode'] = mode
         self.refill_forms()
 
-    def refill_forms(self, pk=None):
+    def refill_forms(self):
         pk = self.session.get('pk')
         if pk is not None:
-            self.client_form, self.client_profile_form = _refill_forms_from_db(pk)
+            self.client_form, self.client_profile_form, self.client_family_formset = _refill_forms_from_db(pk)
         else:
             self.client_form, self.client_profile_form = _refill_forms_from_params(self.params)
 
@@ -109,7 +151,7 @@ class NewClientFormReflex(Reflex):
         self.session['pk'] = pk
         client = Client.objects.get(pk=pk)
         self.toggle('view')
-        self.refill_forms(pk)
+        self.refill_forms()
 
 
 def _refill_forms_from_db(pk):
@@ -138,9 +180,13 @@ def _refill_forms_from_db(pk):
                     "resident_status": client_profile.resident_status,
                 }
             )
+            # TODO Prepopulate family
+            family = Client.objects.filter(head_of_household=client)
+            client_family_formset = ClientFamilyFormSet(prefix="family", initial=family.values())
         except ClientProfile.DoesNotExist:
             client_profile_form = ClientProfileForm()
-        return client_form, client_profile_form
+            client_family_formset = ClientFamilyFormSet(prefix="family")
+        return client_form, client_profile_form, client_family_formset
 
 
 def _refill_forms_from_params(params):

@@ -6,7 +6,12 @@ class Client(models.Model):
     last_name = models.CharField(max_length=200)
     dob = models.DateField()
     nicknames = models.CharField(max_length=200)
-
+    head_of_household = models.ForeignKey(
+        'self',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
 
 class ClientProfile(models.Model):
     # A client is a

@@ -3,8 +3,6 @@
 {% load octicons %}
 {% load bootstrap4 %}       {# import bootstrap4/bootstrap3 #}
 {% block extrahead %}
-  {{ client_form.media }}
-  {{ client_profile_form.media }}
 {% endblock %}
 {% block content %}
 <div class="container">
@@ -111,6 +109,39 @@
           {% bootstrap_field client_profile_form.resident_status %}
           </div>
         </div>
+        <h4>Household Members</h4>
+        <div class="family_members">
+        {% for family in client_family_formset %}
+        <div class="row {% if forloop.last %} edit-family{% endif %}" id="family-{{ forloop.counter0 }}">
+          <div class="col">
+          {% if forloop.first %}
+          {% bootstrap_field family.first_name field_class="family_field" %}
+          {% else %}
+          {% bootstrap_field family.first_name show_label=False field_class="family_field" %}
+          {% endif %}
+          </div>
+          <div class="col">
+          {% if forloop.first %}
+          {% bootstrap_field family.last_name field_class="family_field" %}
+          {% else %}
+          {% bootstrap_field family.last_name show_label=False field_class="family_field" %}
+          {% endif %}
+          </div>
+          <div class="col">
+{% if forloop.first %}
+          {% bootstrap_field family.dob field_class="family_field" %}
+{% else %}
+          {% bootstrap_field family.dob show_label=False field_class="family_field" %}
+{% endif %}
+</div>
+          {% if forloop.last %}
+          <a class="d-flex align-items-center edit-family" data-action="click->new_client#add_family_member">
+            {% octicon "plus" width=24 %}
+          </a>
+          {% endif %}
+        </div>
+        {% endfor %}
+        </div>
         </div>
         </fieldset>
 
@@ -186,88 +217,6 @@
 <div id="view_mode">
   <input type="hidden" id="mode_val" value="{{ mode }}" />
 </div>
-<script>
-  function toggle_mode(mode) {
-      console.log("mutate")
-      let profile_cl = document.getElementById('profile').classList
-      let client_table_cl = document.getElementById('client_table').classList
-      let pagination_cl = document.getElementById('pagination').classList
-
-      if (mode == 'edit') {
-        console.log('in edit loop')
-
-        client_table_cl.add('invisible')
-        client_table_cl.remove('visible')
-
-        pagination_cl.add('invisible')
-        pagination_cl.remove('visible')
-
-        document.getElementById('client_form_fieldset')
-          .disabled = false
-
-        document.getElementById('pencil')
-          .classList.add('d-none')
-
-        document.getElementById('search')
-          .classList.remove('d-none')
-
-        profile_cl.remove('d-none')
-
-      } else if (mode == 'view') {
-        console.log('in view loop')
-
-        client_table_cl.add('invisible')
-        client_table_cl.remove('visible')
-
-        pagination_cl.add('invisible')
-        pagination_cl.remove('visible')
-
-        document.getElementById('client_form_fieldset')
-          .disabled = true
-
-        document.getElementById('pencil')
-          .classList.remove('d-none')
-
-        document.getElementById('search')
-          .classList.remove('d-none')
-
-        profile_cl.remove('d-none')
-      } else if (mode == 'search') {
-        console.log('in search loop')
-
-        client_table_cl.remove('invisible')
-        client_table_cl.add('visible')
-
-        pagination_cl.add('visible')
-        pagination_cl.remove('invisible')
-
-        document.getElementById('client_form_fieldset')
-          .disabled = false
-
-        document.getElementById('pencil')
-          .classList.add('d-none')
-
-        document.getElementById('search')
-          .classList.add('d-none')
-
-        profile_cl.add('d-none')
-      }
-  }
-  function mutation_callback(mutationList, observer) {
-      for (const mutation of mutationList) {
-          console.log("gotcha")
-          if (mutation.type == "attributes") {
-              if (mutation.attributeName == "value") {
-                  toggle_mode(mutation.target.value)
-              }
-          }
-      }
-  }
-
-  const targetNode = document.getElementById('mode_val');
-  const config = { attributes: true };
-  const observer = new MutationObserver(mutation_callback);
-  observer.observe(targetNode, config);
-
-</script>
+  {{ client_form.media }}
+  {{ client_profile_form.media }}
 {% endblock %}

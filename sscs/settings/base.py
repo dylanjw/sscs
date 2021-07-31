@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'channels',
     'sockpuppet',
     'sscs',
-    'octicons',
+    'octicons_v10',
 ]
 
 MIDDLEWARE = [
