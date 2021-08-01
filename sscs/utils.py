@@ -16,10 +16,12 @@ def get_client_list(
         return Client.objects.filter(
             first_name__contains=first_name,
             last_name__contains=last_name,
-            nicknames__contains=nicknames,)
+            nicknames__contains=nicknames,
+            head_of_household=None)
     if dob is not None:
         return Client.objects.filter(
             first_name__contains=first_name,
             last_name__contains=last_name,
             nicknames__contains=nicknames,
-            dob=dob,)
+            dob=dob,
+            head_of_household=None,)

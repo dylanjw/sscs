@@ -202,7 +202,7 @@
     </table>
   </div>
 </div>
-<nav id="pagination" aria-label="Page navigation" data-controller="new_client" data-action="click->new_client#paginate">
+<nav id="pagination" aria-label="Page navigation" data-controller="new_client" data-action="click->new_client#paginate" data-reflex-root="#client_table, #pagination">
     <ul class="pagination justify-content-center">
       {% if page_obj.has_previous %}
       <li class="page-item"><a class="page-link" data-page="{{ page_obj.previous_page_number }}">&laquo;</a></li>
