@@ -61,6 +61,12 @@ class NewClientFormReflex(Reflex):
         self.refill_forms()
 
 
+    def delete_family_member(self):
+        cid = self.element.dataset['uuid']
+        member = Client.objects.get(cid=cid)
+        member.delete()
+        self.refill_forms()
+
     def add_family(self, index):
         family_members = parse_formset_fields('family', self.params)
         pk = self.session.get("pk")
@@ -76,6 +82,10 @@ class NewClientFormReflex(Reflex):
         family_member.save()
         self.mode = "edit"
         self.refill_forms()
+
+
+    def remove_family(self, pk):
+        ...
 
 
     def update(self, field_d):
@@ -161,7 +171,8 @@ def _refill_forms_from_db(pk):
                 "first_name": client.first_name,
                 "last_name":client.last_name,
                 "nicknames":client.nicknames,
-                "dob":client.dob
+                "dob":client.dob,
+                "cid":client.cid,
             }
         )
         try:
@@ -197,7 +208,8 @@ def _refill_forms_from_params(params):
                 "first_name": client_fields.get('first_name'),
                 "last_name": client_fields.get('last_name'),
                 "nicknames": client_fields.get('nicknames'),
-                "dob": client_fields.get('dob')
+                "dob": client_fields.get('dob'),
+                "cid": client_fields.get('cid')
             }
         )
         client_profile_form = ClientProfileForm(

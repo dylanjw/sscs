@@ -16,12 +16,15 @@ class NewClientFormController extends Controller {
     let [_, family_index] = document.querySelector(".row.edit-family").attributes.id.value.split("-")
     this.stimulate('NewClientFormReflex#add_family', family_index)
   }
-  remove_family_member(event) {
+  delete_family_member(event) {
     event.preventDefault()
-    console.log("remove family")
+    this.stimulate('NewClientFormReflex#delete_family_member');
   }
   finalizeAddFamily(element) {
     console.log("finalizeAddFamily")
+    toggle_mode('edit')
+  }
+  finalizeDeleteFamilyMember(element) {
     toggle_mode('edit')
   }
   update(event) {

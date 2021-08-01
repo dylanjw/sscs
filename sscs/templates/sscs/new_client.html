@@ -31,88 +31,90 @@
     {% csrf_token %}
     <fieldset id="client_form_fieldset">
       <div class="row " 
-          {% if mode == 'search' %}
-          data-action="input->new_client#search"
-          {% endif %}
-          >
-          <div id="fn" class="col">
+        {% if mode == 'search' %}
+        data-action="input->new_client#search"
+        {% endif %}>
+
+        {% bootstrap_field client_form.first_name %}
+        <div id="fn" class="col">
           {% bootstrap_field client_form.first_name %}
-          </div>
-          <div id="ln" class="col">
-         {% bootstrap_field client_form.last_name %}
-          </div>
         </div>
-        <div class="row" >
-          <div class="col-8"
-          {% if mode == 'search' %}
-          data-action="input->new_client#search"
-          {% endif %}
-          >
-        {% bootstrap_field client_form.nicknames %}
-          </div>
-          <div class="col"
+        <div id="ln" class="col">
+          {% bootstrap_field client_form.last_name %}
+        </div>
+      </div>
+      <div class="row" >
+        <div class="col-8"
+        {% if mode == 'search' %}
+        data-action="input->new_client#search"
+        {% endif %}>
+          {% bootstrap_field client_form.nicknames %}
+        </div>
+        <div class="col"
           {% if mode == 'search' %}
           data-action="focusout->new_client#search"
           {% endif %}
           {% if mode == 'edit' %}
           data-action="focusout->new_client#update"
-          {% endif %}
-            >
-        {% bootstrap_field client_form.dob %}
+          {% endif %}>
+            {% bootstrap_field client_form.dob %}
           </div>
         </div>
         <!-- Profile fields -->
         <div class="{{ profile_form_classes }}" id="profile" data-controller="new_client" data-reflex-root="#form_container, #view_mode" data-action="change->new_client#update">
-        <div class="row">
-          <div class="col" >
-          {% bootstrap_field client_profile_form.phone_number %}
+          <div class="row">
+            <div class="col" >
+              {% bootstrap_field client_profile_form.phone_number %}
+            </div>
+            <div class="col">
+              {% bootstrap_field client_profile_form.email %}
+            </div>
           </div>
-          <div class="col">
-          {% bootstrap_field client_profile_form.email %}
+          <div class="row">
+            <div class="col" >
+              {% bootstrap_field client_profile_form.address %}
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col" >
-          {% bootstrap_field client_profile_form.address %}
+          <div class="row">
+            <div class="col" >
+              {% bootstrap_field client_profile_form.household_size %}
+            </div>
+            <div class="col" >
+              {% bootstrap_field client_profile_form.pets_cat_count %}
+            </div>
+            <div class="col" >
+              {% bootstrap_field client_profile_form.pets_dog_count %}
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col" >
-          {% bootstrap_field client_profile_form.household_size %}
+          <div class="row">
+            <div class="col" >
+              {% bootstrap_field client_profile_form.dietary_considerations %}
+            </div>
           </div>
-          <div class="col" >
-          {% bootstrap_field client_profile_form.pets_cat_count %}
+          <div class="row">
+            <div class="col"
+                data-action="focusout->new_client#update">
+              {% bootstrap_field client_profile_form.date_of_first_visit %}
+            </div>
+            <div class="col"
+                data-action="focusout->new_client#update">
+              {% bootstrap_field client_profile_form.date_of_last_visit %}
+            </div>
           </div>
-          <div class="col" >
-          {% bootstrap_field client_profile_form.pets_dog_count %}
+          <div class="row">
+            <div class="col" >
+              {% bootstrap_field client_profile_form.resident_status %}
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col" >
-          {% bootstrap_field client_profile_form.dietary_considerations %}
+          <div class="row">
+            <div class="col" >
+              {% bootstrap_field client_form.cid %}
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col" 
-              data-action="focusout->new_client#update"
-            >
-          {% bootstrap_field client_profile_form.date_of_first_visit %}
-          </div>
-          <div class="col" 
-              data-action="focusout->new_client#update"
-          >
-          {% bootstrap_field client_profile_form.date_of_last_visit %}
-          </div>
-        </div>
-        <div class="row">
-          <div class="col" >
-          {% bootstrap_field client_profile_form.resident_status %}
-          </div>
-        </div>
         <h4>Household Members</h4>
         <div class="family_members">
         {% for family in client_family_formset %}
-        <div class="row {% if forloop.last %} edit-family{% endif %}" id="family-{{ forloop.counter0 }}">
+          <div class="row {% if forloop.last %} edit-family{% endif %}" id="family-{{ forloop.counter0 }}" data-reflex-root="#view_mode, #form_container" data-controller="new_client" data-uuid="{{ family.cid.value }}">
           <div class="col">
           {% if forloop.first %}
           {% bootstrap_field family.first_name field_class="family_field" %}
@@ -138,6 +140,11 @@
           <a class="d-flex align-items-center edit-family" data-action="click->new_client#add_family_member">
             {% octicon "plus" width=24 %}
           </a>
+          {% else %}
+          <div class="d-flex d-none delete-family">
+          <a class="d-flex align-items-center delete-family" data-action="click->new_client#delete_family_member"/>
+            {% octicon "dash" width=24 %}
+          </div>
           {% endif %}
         </div>
         {% endfor %}

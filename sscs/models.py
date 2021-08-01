@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 
@@ -12,6 +14,7 @@ class Client(models.Model):
         null=True,
         blank=True
     )
+    cid = models.UUIDField(default=uuid.uuid4, editable=False)
 
 class ClientProfile(models.Model):
     # A client is a

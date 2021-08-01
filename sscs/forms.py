@@ -12,6 +12,7 @@ class ClientForm(forms.Form):
         widget=DatePickerInput(format='%Y-%m-%d')
     )
     nicknames = forms.CharField(label="Nicknames", max_length=200)
+    cid = forms.UUIDField(widget=forms.HiddenInput())
 
 
 ClientFamilyFormSet = forms.formset_factory(ClientForm, extra=1)
