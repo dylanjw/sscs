@@ -35,7 +35,9 @@
         data-action="input->new_client#search"
         {% endif %}>
 
+        <div class="col">
         {% bootstrap_field client_form.first_name %}
+        </div>
         <div id="fn" class="col">
           {% bootstrap_field client_form.first_name %}
         </div>
@@ -157,44 +159,48 @@
           {{ error_message }}
         </div>
       </div>
-      <div id="client_buttons" data-controller="new_client"
-           data-reflex-root="#view_mode, #form_container" data-reflex-serialize-form="true">
+      </form>
+      <div id="client_buttons" 
+           data-controller="new_client"
+           data-reflex-root="#view_mode, #form_container, #client_table" 
+           data-reflex-serialize-form="true">
      {% buttons %}
      {% if mode == "search" %}
-     <button type="reset" class="btn btn-secondary" data-action="click->new_client#search" onClick="this.form.reset()">Reset</button>
+     <a class="btn btn-secondary" data-action="click->new_client#toggle_search">Reset</a>
       {% endif %}
       {% if page_obj.object_list.count == 0 %}
       <button class="btn btn-primary" data-action="click->new_client#new_client">Create New Client</button>
       {% endif %}
      {% endbuttons %}
       </div>
-</form>
 </div>
 <!-- Cient Form End -->
 
 
 <!-- Client Table Start -->
-<div id="client_table" data-action="table:toggle@document->">
-<table class="table table-hover" data-controller="new_client">
-    <thead>
-        <tr>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Date of Birth</th>
-            <th scope="col">Nick Names</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for client in page_obj %}
-        <tr class="view overlay" data-action="click->new_client#select" data-id="{{ client.pk }}">
-            <td>{{client.first_name}}</td>
-            <td>{{client.last_name}}</td>
-            <td>{{client.dob}}</td>
-            <td>{{client.nicknames}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div data-controller="new_client">
+  <div id="client_table">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Date of Birth</th>
+                <th scope="col">Nick Names</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in page_obj %}
+            <tr class="view overlay" data-action="click->new_client#select" data-id="{{ client.pk }}">
+                <td>{{client.first_name}}</td>
+                <td>{{client.last_name}}</td>
+                <td>{{client.dob}}</td>
+                <td>{{client.nicknames}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
 </div>
 <nav id="pagination" aria-label="Page navigation" data-controller="new_client" data-action="click->new_client#paginate">
     <ul class="pagination justify-content-center">

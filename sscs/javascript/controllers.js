@@ -52,16 +52,17 @@ class NewClientFormController extends Controller {
     reload_datepickers()
     this.stimulate('NewClientFormReflex#toggle', 'edit')
   }
+  toggle_search(event) {
+    event.preventDefault()
+    document.getElementById("client_form").reset()
+    this.stimulate('NewClientFormReflex#toggle', 'search')
+  }
   finalizeToggle(element) {
+    console.log("in finalizeToggle");
     let mode = document.getElementById("mode_val").value
     console.log("finalizeToggle")
     toggle_mode(mode)
     reload_datepickers()
-  }
-  toggle_search(event) {
-    event.preventDefault()
-    this.stimulate('NewClientFormReflex#toggle', 'search')
-    document.getElementById("client_form").reset()
   }
   new_client(event) {
     event.preventDefault()
