@@ -35,11 +35,8 @@
         data-action="input->new_client#search"
         {% endif %}>
 
-        <div class="col">
+        <div if="fn" class="col">
         {% bootstrap_field client_form.first_name %}
-        </div>
-        <div id="fn" class="col">
-          {% bootstrap_field client_form.first_name %}
         </div>
         <div id="ln" class="col">
           {% bootstrap_field client_form.last_name %}
