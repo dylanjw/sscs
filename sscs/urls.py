@@ -22,7 +22,6 @@ from .views.test_reflex import TestReflexView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('new_client/', NewClientView.as_view()),
+    path('new_client/', login_required(NewClientView.as_view())),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('test_reflex/', login_required(TestReflexView.as_view()))
 ]
