@@ -152,3 +152,6 @@ STATICFILES_DIRS = [
     BASE_DIR / "static/js",
 ]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/new_client/'
