@@ -32,15 +32,15 @@ class NewClientFormController extends Controller {
     event.preventDefault()
     console.log(event.target)
     if (
-          !event.target.parentNode.classList.contains("family_field")
-        && !event.target.parentNode.parentNode.classList.contains("family_field")
+      !event.target.parentNode.classList.contains("family_field")
+      && !event.target.parentNode.parentNode.classList.contains("family_field")
     ) {
       let name = event.target.name.split("-")
       let form = name[0]
       let field = name[1]
       let value = event.target.value
       this.stimulate(
-        'NewClientFormReflex#update', 
+        'NewClientFormReflex#update',
         {
           form: form, field: field, value: value
         }
@@ -67,6 +67,7 @@ class NewClientFormController extends Controller {
   new_client(event) {
     event.preventDefault()
     document.getElementById("field_errors").classList.remove("d-none")
+    toggle_mode('edit')
     this.stimulate('NewClientFormReflex#new_client')
   }
   select(event) {

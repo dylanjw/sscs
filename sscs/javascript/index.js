@@ -5,9 +5,9 @@ import NewClientFormController from './controllers.js'
 
 
 const application = Application.start()
-const consumer = new WebsocketConsumer('wss://'+ window.location.host + '/ws/sockpuppet-sync')
+const consumer = new WebsocketConsumer('wss://' + window.location.host + '/ws/sockpuppet-sync')
 
 application.register('new_client', NewClientFormController)
 console.log(application)
 application.consumer = consumer
-StimulusReflex.initialize(application, {debug: true })
+StimulusReflex.initialize(application, { debug: true })

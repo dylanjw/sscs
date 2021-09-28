@@ -159,7 +159,6 @@
           {{ error_message }}
         </div>
       </div>
-      </form>
       <div id="client_buttons" 
            data-controller="new_client"
            data-reflex-root="#view_mode, #form_container, #client_table" 
@@ -173,13 +172,14 @@
       {% endif %}
      {% endbuttons %}
       </div>
+      </form>
 </div>
 <!-- Cient Form End -->
 
 
 <!-- Client Table Start -->
+<div id="client_table">
 <div data-controller="new_client">
-  <div id="client_table">
     <table class="table table-hover">
         <thead>
             <tr>
@@ -201,7 +201,6 @@
         </tbody>
     </table>
   </div>
-</div>
 <nav id="pagination" aria-label="Page navigation" data-controller="new_client" data-action="click->new_client#paginate" data-reflex-root="#client_table, #pagination">
     <ul class="pagination justify-content-center">
       {% if page_obj.has_previous %}
@@ -223,6 +222,7 @@
       {% endif %}
     </ul>
     </nav>
+</div>
 <!-- Client Table Stop -->
 
 </div>

@@ -26,6 +26,8 @@ DATABASES = {
     'default': env.db(),
 }
 
+MIDDLEWARE.append('beeline.middleware.django.HoneyMiddleware')
+
 # Cant use TLS for redis until
 # resolved channels_redis/issues/235
 CHANNEL_LAYERS = {
