@@ -102,9 +102,6 @@ class NewClientFormReflex(Reflex):
             client_profile.save()
             print("saving profile")
         self.refill_forms()
-        print(
-            f"self.mode:{self.mode}, session['mode']{self.session.get('mode')}"
-        )
 
     def new_client(self):
         form_fields = parse_form_fields("client", self.params)

@@ -18,10 +18,9 @@ from django.urls import path, include
 from django.contrib.auth.decorators import login_required
 
 from .views import NewClientView
-from .views.test_reflex import TestReflexView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('new_client/', login_required(NewClientView.as_view())),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path("admin/", admin.site.urls),
+    path("new_client/", login_required(NewClientView.as_view())),
+    path("accounts/", include("django.contrib.auth.urls")),
 ]
